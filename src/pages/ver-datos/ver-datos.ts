@@ -18,10 +18,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: 'ver-datos.html',
 })
 export class VerDatosPage {
-  public jugadores: Array<object>;
-  public informacion: Array<object>;
-  public partidos: Array<object>;
+  public jugadores: Array<any>;
+  public informacion: Array<any>;
+  public partidos: Array<any>;
   public info: FormGroup;
+  public datos:Array<number>; 
   public id: number;
 
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, private builder:FormBuilder, public navParams: NavParams) {
@@ -30,7 +31,7 @@ export class VerDatosPage {
       Tipo: ['', Validators.required]
     });
   }
-cargarJugadores(){
+  cargarJugadores(){
   firebase.database().ref('/' + JugadoresProvider.categoria + '/Jugadores').on('value', (snapshot) => {
     this.jugadores = [];
     snapshot.forEach((snap) => {
@@ -38,10 +39,20 @@ cargarJugadores(){
       return false;
     });
   });
-}
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad VerDatosPage');
     this.cargarJugadores();
+    this.cargarminutos();
+  }
+  cargarminutos(){
+  firebase.database().ref('/' + JugadoresProvider.categoria).on('value', (snapshot) => {
+    this.datos=[];
+    snapshot.forEach((snap) => {
+      this.datos.push(snap.val());
+      return false;
+    });
+  });
   }
   buscarinformacion(form){
     document.getElementById("informacion").className="";
@@ -61,14 +72,30 @@ cargarJugadores(){
     if(this.informacion[0] != null || this.informacion[0] != undefined){
     document.getElementById("informacion").style.display="block";
     if(form.value.Tipo=="Asistencias"){
-      document.getElementById("informacion").className="asistencia";
-      document.getElementById("informacion").innerHTML="<span><H4>Faltas de asistencia :</H4> <H5>" + this.informacion[0].fecha + "</H5></span>";
-      for(cont2 =1;cont2<this.informacion.length;cont2++){
+      firebase.database().ref('/' + JugadoresProvider.categoria + '/Partidos').on('value', (snapshot) => {
+        this.partidos=[];
+        snapshot.forEach((snap) => {
+          this.partidos.push(snap.val());
+          return false;
+        });
+      });
+      var asistencias=this.datos[3]*this.partidos.length;
+      document.getElementById("informacion").innerHTML="<H4>Faltas de asistencia: " + this.informacion.length + " / "+ asistencias+"</H4>";
+      var contenido=document.createElement("DIV");
+      var a=document.createAttribute("class");
+      a.value="asistencia";
+      contenido.setAttributeNode(a);
+      var node = document.createElement("H4");
+      var textnode = document.createTextNode("Fechas de faltas:");
+      node.appendChild(textnode);
+      contenido.appendChild(node);
+      for(cont2 =0;cont2<this.informacion.length;cont2++){
         var node = document.createElement("H5");
         var textnode = document.createTextNode(this.informacion[cont2].fecha);
         node.appendChild(textnode);
-        document.getElementById("informacion").appendChild(node);
+        contenido.appendChild(node);
       }
+      document.getElementById("informacion").appendChild(contenido);
     }
     if(form.value.Tipo=="Minutos"){
       var partidos_f=[];
@@ -90,7 +117,14 @@ cargarJugadores(){
           }
       }
       if(cont2==this.informacion.length){
-        document.getElementById("informacion").innerHTML="<h5>Partidos jugados : " + this.informacion.length +"</h5><br/>";
+        var minutos_t=0;
+        var minutos_tj=0;
+        for(cont =0;cont<this.informacion.length;cont++){
+                minutos_tj=minutos_tj+this.informacion[cont].minutos;
+            }
+        minutos_t=this.datos[4];
+        minutos_t=minutos_t*this.informacion.length;
+        document.getElementById("informacion").innerHTML="<h5>Partidos jugados : " + this.informacion.length +"</h5>"+"<h5>Minutos totales : " + minutos_tj +" de "+minutos_t+"</h5><br/>";
         for(cont2 =0;cont2<this.informacion.length;cont2++){
           var contenido=document.createElement("DIV");
           var a=document.createAttribute("class");
@@ -135,7 +169,7 @@ cargarJugadores(){
           tabla.appendChild(tr);
           contenido.appendChild(tabla);
           var node = document.createElement("SPAN");
-          var textnode = document.createTextNode("Minutos jugados:" + this.informacion[cont2].minutos);
+          var textnode = document.createTextNode( this.informacion[cont2].minutos+" Minutos jugados");
           node.appendChild(textnode);
           contenido.appendChild(node);
           document.getElementById("informacion").appendChild(contenido);
@@ -199,6 +233,5 @@ cargarJugadores(){
       });
       alert.present();
     }
-
   }
 }

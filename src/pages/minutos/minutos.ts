@@ -20,15 +20,24 @@ export class MinutosPage {
   public jugadores: Array<object>;
   public id: number;
   public minutos: Array<number> = new Array(25);
+  public minutot: Array<any>;
   public fecha: string;
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinutosPage');
+    this.cargarminutot();
     this.jugadores = JugadoresProvider.getJugadores();
   }
-  
+  cargarminutot(){
+    firebase.database().ref('/' + JugadoresProvider.categoria).on('value', (snapshot) => {
+      snapshot.forEach((snap) => {
+        this.minutot=snap.val();
+        return false;
+      });
+    });
+  }
   crearminuto(jugador) {
     this.id = this.jugadores.indexOf(jugador);
     this.minutos[this.id] = jugador.min;
@@ -52,13 +61,14 @@ export class MinutosPage {
           handler: () => {
             let fjugador = 0;
             let ferror = 0;
+            var minutot :any =this.minutot;
             let tam;
             for(let cont2 = 0; fjugador == 0 && ferror==0; cont2++){
               if (this.minutos[cont2] == undefined || this.minutos[cont2] == null || this.minutos[cont2]== NaN ) {
                 ferror=1;
               }
               this.minutos[cont2]=Math.floor(this.minutos[cont2]);
-              if(this.minutos[cont2]>120){
+              if(this.minutos[cont2]>minutot){
                 ferror=2;
               }
               if(this.minutos[cont2]<0){
@@ -109,7 +119,7 @@ export class MinutosPage {
             }else if(ferror==2){
               let alert = this.alertCtrl.create({
                 title: 'Error al enviar minutos',
-                message: 'Uno o varios campos superan los 120 minutos',
+                message: 'Uno o varios campos superan los '+ minutot +' minutos',
                 buttons: [
                   {
                     text: 'Aceptar',
