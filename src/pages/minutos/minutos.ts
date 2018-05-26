@@ -30,6 +30,8 @@ export class MinutosPage {
     this.cargarminutot();
     this.jugadores = JugadoresProvider.getJugadores();
   }
+  ionViewDidEnter(){
+  }
   cargarminutot(){
     firebase.database().ref('/' + JugadoresProvider.categoria).on('value', (snapshot) => {
       snapshot.forEach((snap) => {

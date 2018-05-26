@@ -43,19 +43,19 @@
       <button ion-button type="submit">Subir partido</button>
     </div>
   </form>
-  <div class="partidos-container" *ngIf="partidos.length > 0" >
+  <div width="100%"  class="partidos-container" *ngIf="partidos.length > 0" >
     <h1>Mis partidos</h1>
-    <div class="partidos">
+    <div class="partidos" width="100%" >
       <table width="100%" align="center">
         <ul>
           <li class="partido" *ngFor="let partido of partidos">
-          <tr>
-            <td colspan="3" align="center">
+          <tr >
+            <td colspan="3" align="center" >
               <h4>{{partido.fecha}}</h4>
             </td>
           </tr>
           <tr>
-            <td width="40%"> 
+            <td width="400px"> 
               <div class="local">
                 <span class="nombre-equipo">{{ partido.Equipo1 }}</span>
               </div>
