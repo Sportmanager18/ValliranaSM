@@ -63,6 +63,7 @@ page-partidos {
         justify-content: space-between;
         padding: 15px 0px;
         border-bottom: 1px solid grey;
+        padding-left:10px;
     }
 
     .partido:last-child {
@@ -74,17 +75,9 @@ page-partidos {
         padding: 5px 0px;
         font-size: 18px;
     }
-
-    .visitante {
-        flex-direction: row-reverse;
-    }
-
     .goles {
         font-weight: bold;
         padding: 0px 5px;
     }
-    td{
-        padding:0px 10px;
-    } 
     
 }
