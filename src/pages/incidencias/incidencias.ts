@@ -19,6 +19,7 @@ export class IncidenciasPage {
   public jugadores: Array<object>;
   public incidencia: any = { }
   public jugador: object;
+  public static id : number;
 
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -27,21 +28,12 @@ export class IncidenciasPage {
     console.log('ionViewDidLoad IncidenciasPage');
     this.jugadores = JugadoresProvider.getJugadores();
   }
-
-  ionViewWillEnter() {
-    if (JugadoresProvider.seleccionado != null) {
-      this.jugador = JugadoresProvider.seleccionado;
-      console.log(this.jugador);
-    }
-  }
-
   seleccionarJugador() {
     this.navCtrl.push(ListajugadoresPage);
   }
 
   enviarIncidencia() {
-    let id = this.jugadores.indexOf(this.jugador);
-    if(id === -1) {
+    if(IncidenciasPage.id === -1) {
       let alert = this.alertCtrl.create({
         title: 'Error al enviar incidencia',
         message: 'No se ha selecionado Jugador',
@@ -54,7 +46,6 @@ export class IncidenciasPage {
       });
       alert.present();
       console.log("jugador no encontrado");
-      JugadoresProvider.seleccionado = null;
       return false;
     }else if(this.incidencia.asunto==null){
       let alert = this.alertCtrl.create({
@@ -99,7 +90,7 @@ export class IncidenciasPage {
               console.log(this.jugador);
               let asunto = this.incidencia.asunto;
               let descripcion = this.incidencia.descripcion;
-              JugadoresProvider.guardarIncidencia(id, asunto, descripcion, () => {
+              JugadoresProvider.guardarIncidencia(IncidenciasPage.id, asunto, descripcion, () => {
                 let alert = this.alertCtrl.create({
                   title: 'Incidencia enviada',
                   message: 'La incidencia se ha enviado exitosamente!',

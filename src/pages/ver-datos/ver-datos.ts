@@ -24,7 +24,7 @@ export class VerDatosPage {
   public info: FormGroup;
   public datos:Array<number>; 
   public id: number;
-
+  public nminutos:number=0;
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, private builder:FormBuilder, public navParams: NavParams) {
     this.info = builder.group({
       Jugador: ['', Validators.required],
@@ -79,7 +79,7 @@ export class VerDatosPage {
           return false;
         });
       });
-      var asistencias=this.datos[3]*this.partidos.length;
+      var asistencias=this.datos[5]*this.partidos.length;
       document.getElementById("informacion").innerHTML="<H4>Faltas de asistencia: " + this.informacion.length + " / "+ asistencias+"</H4>";
       var contenido=document.createElement("DIV");
       var a=document.createAttribute("class");
@@ -119,63 +119,90 @@ export class VerDatosPage {
       if(cont2==this.informacion.length){
         var minutos_t=0;
         var minutos_tj=0;
+        this.nminutos=0;
         for(cont =0;cont<this.informacion.length;cont++){
+            if(this.informacion[cont].minutos!=null && this.informacion[cont].minutos!=undefined){
                 minutos_tj=minutos_tj+this.informacion[cont].minutos;
+                this.nminutos++;
+              }
             }
-        minutos_t=this.datos[4];
-        minutos_t=minutos_t*this.informacion.length;
-        document.getElementById("informacion").innerHTML="<h5>Partidos jugados : " + this.informacion.length +"</h5>"+"<h5>Minutos totales : " + minutos_tj +" de "+minutos_t+"</h5><br/>";
+        minutos_t=this.datos[7];
+        minutos_t=minutos_t*this.nminutos;
+        document.getElementById("informacion").innerHTML="<h5>Partidos convocado : " + this.nminutos+' / '+this.partidos.length +"</h5>"+"<h5>Minutos totales : " + minutos_tj +" de "+minutos_t+"</h5><br/>";
         for(cont2 =0;cont2<this.informacion.length;cont2++){
+          if(this.informacion[cont2].minutos!=null && this.informacion[cont2].minutos!=undefined){
+            var contenido=document.createElement("DIV");
+            var a=document.createAttribute("class");
+            a.value="minutos";
+            contenido.setAttributeNode(a);
+            var node = document.createElement("H5");
+            var textnode = document.createTextNode(this.informacion[cont2].fecha);
+            node.appendChild(textnode);
+            contenido.appendChild(node);
+            var tabla = document.createElement("TABLE");
+            var a=document.createAttribute("width");
+            a.value="100%";
+            tabla.setAttributeNode(a);
+            var tr = document.createElement("TR");
+            var td = document.createElement("TD");
+            var a=document.createAttribute("width");
+            a.value="30%";
+            td.setAttributeNode(a);
+            var node = document.createElement("H6");
+            var textnode = document.createTextNode(partidos_f[cont2].Equipo1);
+            node.appendChild(textnode);
+            td.appendChild(node);
+            tr.appendChild(td);
+            var td = document.createElement("TD");
+            var a=document.createAttribute("width");
+            a.value="30%";
+            td.setAttributeNode(a);
+            var node = document.createElement("H6");
+            var textnode = document.createTextNode(partidos_f[cont2].GEquipo1+" - "+partidos_f[cont2].GEquipo2);
+            node.appendChild(textnode);
+            td.appendChild(node);
+            tr.appendChild(td);
+            var td = document.createElement("TD");
+            var a=document.createAttribute("width");
+            a.value="30%";
+            td.setAttributeNode(a);
+            var node = document.createElement("H6");
+            var textnode = document.createTextNode(partidos_f[cont2].Equipo2);
+            node.appendChild(textnode);
+            td.appendChild(node);
+            tr.appendChild(td);
+            tabla.appendChild(tr);
+            contenido.appendChild(tabla);
+            var node = document.createElement("SPAN");
+            var textnode = document.createTextNode( this.informacion[cont2].minutos+" Minutos jugados");
+            node.appendChild(textnode);
+            contenido.appendChild(node);
+            document.getElementById("informacion").appendChild(contenido);
+            var contenido = document.createElement("BR");
+            var node = document.createElement("BR");
+            contenido.appendChild(node);
+            document.getElementById("informacion").appendChild(contenido);
+          }
+        }
+        if(this.nminutos!=this.partidos.length ){
           var contenido=document.createElement("DIV");
           var a=document.createAttribute("class");
-          a.value="minutos";
+          a.value="asistencia";
           contenido.setAttributeNode(a);
-          var node = document.createElement("H5");
-          var textnode = document.createTextNode(this.informacion[cont2].fecha);
+          var node = document.createElement("H4");
+          var textnode = document.createTextNode("Fechas de no convocados:");
           node.appendChild(textnode);
           contenido.appendChild(node);
-          var tabla = document.createElement("TABLE");
-          var a=document.createAttribute("width");
-          a.value="100%";
-          tabla.setAttributeNode(a);
-          var tr = document.createElement("TR");
-          var td = document.createElement("TD");
-          var a=document.createAttribute("width");
-          a.value="30%";
-          td.setAttributeNode(a);
-          var node = document.createElement("H6");
-          var textnode = document.createTextNode(partidos_f[cont2].Equipo1);
-          node.appendChild(textnode);
-          td.appendChild(node);
-          tr.appendChild(td);
-          var td = document.createElement("TD");
-          var a=document.createAttribute("width");
-          a.value="30%";
-          td.setAttributeNode(a);
-          var node = document.createElement("H6");
-          var textnode = document.createTextNode(partidos_f[cont2].GEquipo1+" VS "+partidos_f[cont2].GEquipo2);
-          node.appendChild(textnode);
-          td.appendChild(node);
-          tr.appendChild(td);
-          var td = document.createElement("TD");
-          var a=document.createAttribute("width");
-          a.value="30%";
-          td.setAttributeNode(a);
-          var node = document.createElement("H6");
-          var textnode = document.createTextNode(partidos_f[cont2].Equipo2);
-          node.appendChild(textnode);
-          td.appendChild(node);
-          tr.appendChild(td);
-          tabla.appendChild(tr);
-          contenido.appendChild(tabla);
-          var node = document.createElement("SPAN");
-          var textnode = document.createTextNode( this.informacion[cont2].minutos+" Minutos jugados");
-          node.appendChild(textnode);
-          contenido.appendChild(node);
-          document.getElementById("informacion").appendChild(contenido);
-          var contenido = document.createElement("BR");
-          var node = document.createElement("BR");
-          contenido.appendChild(node);
+          for(cont2 =0;cont2<this.informacion.length;cont2++){
+            console.log("Fuera");
+            if(this.informacion[cont2].minutos==null || this.informacion[cont2].minutos==undefined){
+              console.log("Dentro");
+              var node = document.createElement("H5");
+              var textnode = document.createTextNode(this.informacion[cont2].fecha);
+              node.appendChild(textnode);
+              contenido.appendChild(node);
+            }
+          }
           document.getElementById("informacion").appendChild(contenido);
         }
       }else{

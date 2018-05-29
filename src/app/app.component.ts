@@ -13,7 +13,7 @@ import { AsistenciaPage } from '../pages/asistencia/asistencia';
 import { JugadoresProvider } from '../providers/jugadores/jugadores';
 import { EquiposProvider } from '../providers/equipos/equipos';
 import { VerDatosPage } from '../pages/ver-datos/ver-datos';
-
+import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
 @Component({
   templateUrl: 'app.html'
 })
@@ -22,6 +22,7 @@ export class MyApp {
 
   rootPage: any = LoginPage; // pagina principal
   public categoria:string;
+  public clasi:Array<any>;
   pages: Array<{icon:string, title: string, component: any}>;
 
   config: any; // almacena la confifuracion de firebase
@@ -37,7 +38,7 @@ export class MyApp {
     this.config = {
       apiKey: "AIzaSyD1GKHefLf-X6wZtqF9gnlMsSPWnzMKJ7U",
       authDomain: "pbvallirana-8648d.firebaseapp.com",
-      databaseURL: "https://pbvallirana-8648d.firebaseio.com/",
+      databaseURL: "https://pbvallirana-8648d.firebaseio.com",
       projectId: "pbvallirana-8648d",
       storageBucket: "pbvallirana-8648d.appspot.com",
       messagingSenderId: "494529543842"
@@ -45,8 +46,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { icon: "football",title: 'Partidos', component: PartidosPage },
+      { icon: "add-circle", title: 'Subir partido',component:SubirpartidoPage},
       { icon: "contacts", title: 'Asistencia', component: AsistenciaPage },
-      { icon: "timer", title: 'Minutos', component: MinutosPage },
       { icon: "warning", title: 'Incidencias', component: IncidenciasPage },
       { icon: "eye", title: 'Ver datos', component: VerDatosPage }
     ];
@@ -81,6 +82,13 @@ export class MyApp {
           this.categoria = email[0].substring(0, 1).toUpperCase() + email[0].substring(1, email[0].length - 1) + email[0].substring(email[0].length -1 ).toUpperCase();
           // y lo guardamos en la propiedad estatica categoria de JugadoresProvider
           JugadoresProvider.categoria = this.categoria;
+          firebase.database().ref('/' + this.categoria).on('value', (snapshot) => {
+            this.clasi=[];
+            snapshot.forEach((snap) => {
+              this.clasi.push(snap.val());
+              return false;
+            });
+          });
           // cargamos equipos
           EquiposProvider.fetch();
           // cargamos los jugadores de la cuenta que ha iniciado sesion
@@ -90,6 +98,7 @@ export class MyApp {
         }
       });
     });
+    
   }
 
   openPage(page) {
@@ -97,7 +106,9 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
-
+  equipo(){
+    location.assign(this.clasi[6]);
+  }
   signOut() {
     let alert = this.alertCtrl.create({
       title: 'Cerrar sesion',

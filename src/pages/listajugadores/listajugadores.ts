@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { JugadoresProvider } from '../../providers/jugadores/jugadores';
+import { IncidenciasPage } from '../incidencias/incidencias';
 //import firebase from 'firebase';
 /**
  * Generated class for the ListajugadoresPage page.
@@ -36,6 +37,7 @@ export class ListajugadoresPage {
 
   seleccionar(jugador) {
     JugadoresProvider.seleccionado = jugador;
+    IncidenciasPage.id = this.jugadores.indexOf(jugador);
     this.navCtrl.pop();
   }
 

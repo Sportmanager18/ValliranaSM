@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { JugadoresProvider } from '../../providers/jugadores/jugadores';
 import { MyApp } from '../../app/app.component';
 import firebase from 'firebase';
+import { SubirpartidoPage } from '../subirpartido/subirpartido';
+import { PartidosPage } from '../partidos/partidos';
 /**
  * Generated class for the MinutosPage page.
  *
@@ -20,31 +22,44 @@ export class MinutosPage {
   public jugadores: Array<object>;
   public id: number;
   public minutos: Array<number> = new Array(25);
-  public minutot: Array<any>;
+  public minutost: Array<any>;
   public fecha: string;
+  private convocado:Array<object>=new Array(25);
+  private convocados:Array<object>;
+  public noconvocados:Array<number> = new Array(25);
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MinutosPage');
-    this.cargarminutot();
+    this.cargarminutost();
     this.jugadores = JugadoresProvider.getJugadores();
+    let cont2=0,cont3=0;
+    for(let cont=0;cont<this.jugadores.length;cont++){
+      if(SubirpartidoPage.convocados[cont]!=true){
+        this.convocado[cont2]=this.jugadores[cont];
+        cont2++;
+      }else{
+        this.noconvocados[cont3]=cont;
+        cont3++;
+      }
+    }
+    this.convocados=new Array(cont2-1);
+    for(let cont=0;cont<cont2;cont++){this.convocados[cont]=this.convocado[cont];}
+    console.log(this.convocados);
   }
-  ionViewDidEnter(){
-  }
-  cargarminutot(){
+  cargarminutost(){
     firebase.database().ref('/' + JugadoresProvider.categoria).on('value', (snapshot) => {
       snapshot.forEach((snap) => {
-        this.minutot=snap.val();
+        this.minutost=snap.val();
         return false;
       });
     });
   }
-  crearminuto(jugador) {
-    this.id = this.jugadores.indexOf(jugador);
-    this.minutos[this.id] = jugador.min;
+  crearminuto(convocado) {
+    this.id = this.convocados.indexOf(convocado);
+    this.minutos[this.id] = convocado.min;
   }
-
   subirminutos() {
     let alert = this.alertCtrl.create({
       title: 'Subir minutos',
@@ -63,8 +78,8 @@ export class MinutosPage {
           handler: () => {
             let fjugador = 0;
             let ferror = 0;
-            var minutot :any =this.minutot;
             let tam;
+            var minutot :any =this.minutost;
             for(let cont2 = 0; fjugador == 0 && ferror==0; cont2++){
               if (this.minutos[cont2] == undefined || this.minutos[cont2] == null || this.minutos[cont2]== NaN ) {
                 ferror=1;
@@ -76,25 +91,31 @@ export class MinutosPage {
               if(this.minutos[cont2]<0){
                 ferror=3;
               }
-              if (this.jugadores[cont2 + 1] == null) {
+              if (this.convocados[cont2 + 1] == null) {
                 fjugador = 1;
                 tam=cont2;
               }
             }
-
-            if(ferror==0){ 
+            let date = new Date();
+            let dd = date.getDate();
+            let mm = (date.getMonth() + 1);
+            let yyyy = date.getFullYear();
+            this.fecha = yyyy + '-' + mm + '-' + dd;
+            if(ferror==0){    
               for (let cont = 0; cont <= tam; cont++) {
-                console.log(this.minutos[cont]);
-                let date = new Date();
-                let dd = date.getDate();
-                let mm = (date.getMonth() + 1);
-                let yyyy = date.getFullYear();
-                this.fecha = yyyy + '-' + mm + '-' + dd;
+                var fconvocados=true;
+                for(let cont2=0;cont2<this.convocados.length;cont2++){
+                  if(this.noconvocados[cont2]==cont){
+                    fconvocados=false;
+                  }
+                }
+                if(fconvocados){
                   firebase.database().ref('/' + JugadoresProvider.categoria + '/Jugadores/' + cont + '/Minutos/' + this.fecha).set({
                     fecha: this.fecha,
                     minutos: this.minutos[cont]
                   });
                 }
+              }
               let alert = this.alertCtrl.create({
                 title: 'Se han enviado los minutos',
                 message: 'Los minutos se han enviado exitosamente!',
@@ -106,6 +127,7 @@ export class MinutosPage {
                 ]
               });
               alert.present();
+              this.navCtrl.setRoot(PartidosPage);
             }else if(ferror==1){
               let alert = this.alertCtrl.create({
                 title: 'Error al enviar minutos',

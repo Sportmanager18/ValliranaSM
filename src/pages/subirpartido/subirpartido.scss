@@ -1,0 +1,82 @@
+page-subirpartido {
+        .vs-container {
+            display: flex;
+            align-items: center;
+        }
+    
+        .vs-container h1 {
+            margin: 0px 15px;
+            text-align: center;
+        }
+    
+        form .button {
+            margin: 15px 0px;
+            width: 100%;
+        }
+    
+        button {
+            padding: 0;
+        }
+    
+        .item {
+            padding: 0;
+        }
+    
+        .select {
+            padding-left: 0px; 
+            max-width: 100%;
+        }
+    
+        .label {
+            margin: 0;
+            width: 35%;
+        }
+    
+        .partido-inputs {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-top: 15px;
+        }
+    
+        .partido-inputs input {
+            text-align: center;
+        }
+    
+        .partido-inputs ion-input {
+            border: 1px solid grey;
+            max-width: 50px;
+        }
+    
+        .partidos-container {
+            margin-top: 25px;
+        }
+    
+       .partidos ul {
+            list-style-type: none;
+            padding: 0;
+        }
+    
+        .partido {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0px;
+            border-bottom: 1px solid grey;
+            padding-left:10px;
+        }
+    
+        .partido:last-child {
+            border-bottom: none;
+        }
+    
+        .partido div {
+            display: flex;
+            padding: 5px 0px;
+            font-size: 18px;
+        }
+        .goles {
+            font-weight: bold;
+            padding: 0px 5px;
+    }
+}
+    

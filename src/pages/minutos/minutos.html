@@ -7,9 +7,6 @@
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>Minutos
       <img src="assets/imgs/logosf.png"/>
     </ion-title>
@@ -17,9 +14,9 @@
 
 </ion-header>
 <ion-content padding>
-  <ion-item *ngFor="let jugador of jugadores">
-  <ion-label>{{ jugador.nombre }}</ion-label>
-  <ion-input ion-right type="number" [(ngModel)]="jugador.min" (change)="crearminuto(jugador)"></ion-input>
+  <ion-item *ngFor="let convocado of convocados">
+  <ion-label>{{ convocado.nombre }}</ion-label>
+  <ion-input ion-right type="number" [(ngModel)]="convocado.min" (change)="crearminuto(convocado)"></ion-input>
 </ion-item>
 <button ion-button full (click)="subirminutos()">Enviar Minutos</button>
 </ion-content>

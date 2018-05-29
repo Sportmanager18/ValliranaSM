@@ -16,6 +16,7 @@ import { MinutosPage } from '../pages/minutos/minutos';
 import { AsistenciaPage } from '../pages/asistencia/asistencia';
 import { EquiposProvider } from '../providers/equipos/equipos';
 import { VerDatosPage } from '../pages/ver-datos/ver-datos';
+import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
 @NgModule({
   declarations: [
     MyApp,
@@ -23,6 +24,7 @@ import { VerDatosPage } from '../pages/ver-datos/ver-datos';
     LoginPage,
     ListajugadoresPage,
     PartidosPage,
+    SubirpartidoPage,
     MinutosPage,
     AsistenciaPage,
     VerDatosPage
@@ -38,6 +40,7 @@ import { VerDatosPage } from '../pages/ver-datos/ver-datos';
     LoginPage,
     ListajugadoresPage,
     PartidosPage,
+    SubirpartidoPage,
     MinutosPage,
     AsistenciaPage,
     VerDatosPage

@@ -17,55 +17,41 @@
 </ion-header>
 
 <ion-content padding>
-
-  
-  <form [formGroup]="form" (ngSubmit)="subirPartido(form)">
-    <div class="nuevo-partido">
-      <div class="vs-container">
-        <ion-item>
-          <ion-label>Local</ion-label>
-          <ion-select formControlName="equipoLocal" name="equipoLocal" required>
-          <ion-option *ngFor="let equipo of equipos">{{ equipo.nombre }}</ion-option>
-          </ion-select>
-        </ion-item>
-        <h1>VS</h1>
-        <ion-item>
-          <ion-label>Visitante</ion-label>
-          <ion-select formControlName="equipoVisitante" name="equipoVisitante" required>
-            <ion-option *ngFor="let equipo of equipos">{{ equipo.nombre }}</ion-option>
-          </ion-select>
-        </ion-item>
-      </div>
-      <div class="partido-inputs">
-        <ion-input formControlName="golesLocal" name="golesLocal" type="number" value="0" required></ion-input>
-        <ion-input formControlName="golesVisitante" name="golesVisitante" type="number" value="0" required></ion-input>
-      </div>
-      <button ion-button type="submit">Subir partido</button>
-    </div>
-  </form>
+  <ion-list width="100%">
+    <ion-item (click)="Clasificacion()">
+      <h1>
+        <ion-icon align="right" name="list-box"> Clasificacion</ion-icon>
+      </h1>
+    </ion-item>
+    <ion-item (click)="Calendario()">
+        <h1>
+          <ion-icon name="calendar"> Calendario</ion-icon>
+        </h1>
+    </ion-item>
+  </ion-list>
   <div class="partidos-container" *ngIf="partidos.length > 0" >
-    <h1>Mis partidos</h1>
-    <div class="partidos" >
+    <h1>Mis partidos:</h1>
+    <div class="partidos">
       <table width="100%" align="center">
         <ul>
           <li class="partido" *ngFor="let partido of partidos">
-          <tr >
-            <td colspan="3" align="center" >
+          <tr>
+            <td colspan="3" align="center">
               <h4>{{partido.fecha}}</h4>
             </td>
           </tr>
           <tr>
             <td width="40%"> 
               <div class="local">
-                <span class="nombre-equipo">{{ partido.Equipo1 }}</span>
+                <h5 class="nombre-equipo">{{ partido.Equipo1 }}</h5>
               </div>
             </td>
-            <td width="20%">
-              <div>{{ partido.GEquipo1 }} VS {{ partido.GEquipo2 }}</div>
+            <td width="20%" align="center">
+              <h4>{{ partido.GEquipo1 }} - {{ partido.GEquipo2 }}</h4>
             </td>
             <td width="40%">
               <div class="visitante">
-                <span class="nombre-equipo">{{ partido.Equipo2 }}</span>
+                <h5 class="nombre-equipo">{{ partido.Equipo2 }}</h5>
               </div>
             </td>
           </tr>

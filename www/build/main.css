@@ -25829,6 +25829,10 @@ h5 {
   margin-top: 10px;
 }
 
+.partidos {
+  font-weight: 700;
+}
+
 page-incidencias .scroll-content {
   padding-top: 15px;
 }
@@ -25976,6 +25980,118 @@ page-partidos .partido div {
 }
 
 page-partidos .goles {
+  font-weight: bold;
+  padding: 0px 5px;
+}
+
+page-partidos .partidos {
+  font-weight: 700;
+}
+
+page-partidos .iconos {
+  width: 100%;
+}
+
+page-subirpartido .vs-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+page-subirpartido .vs-container h1 {
+  margin: 0px 15px;
+  text-align: center;
+}
+
+page-subirpartido form .button {
+  margin: 15px 0px;
+  width: 100%;
+}
+
+page-subirpartido button {
+  padding: 0;
+}
+
+page-subirpartido .item {
+  padding: 0;
+}
+
+page-subirpartido .select {
+  padding-left: 0px;
+  max-width: 100%;
+}
+
+page-subirpartido .label {
+  margin: 0;
+  width: 35%;
+}
+
+page-subirpartido .partido-inputs {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 15px;
+}
+
+page-subirpartido .partido-inputs input {
+  text-align: center;
+}
+
+page-subirpartido .partido-inputs ion-input {
+  border: 1px solid grey;
+  max-width: 50px;
+}
+
+page-subirpartido .partidos-container {
+  margin-top: 25px;
+}
+
+page-subirpartido .partidos ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+page-subirpartido .partido {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 15px 0px;
+  border-bottom: 1px solid grey;
+  padding-left: 10px;
+}
+
+page-subirpartido .partido:last-child {
+  border-bottom: none;
+}
+
+page-subirpartido .partido div {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px 0px;
+  font-size: 18px;
+}
+
+page-subirpartido .goles {
   font-weight: bold;
   padding: 0px 5px;
 }
