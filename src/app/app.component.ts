@@ -14,6 +14,7 @@ import { JugadoresProvider } from '../providers/jugadores/jugadores';
 import { EquiposProvider } from '../providers/equipos/equipos';
 import { VerDatosPage } from '../pages/ver-datos/ver-datos';
 import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
+import { JugadoresPage } from '../pages/jugadores/jugadores';
 @Component({
   templateUrl: 'app.html'
 })
@@ -49,7 +50,9 @@ export class MyApp {
       { icon: "add-circle", title: 'Subir partido',component:SubirpartidoPage},
       { icon: "contacts", title: 'Asistencia', component: AsistenciaPage },
       { icon: "warning", title: 'Incidencias', component: IncidenciasPage },
+      {icon: "contact", title: 'Jugadores', component: JugadoresPage },
       { icon: "eye", title: 'Ver datos', component: VerDatosPage }
+      
     ];
     /*console.log('ionViewDidLoad ListajugadoresPage');
     firebase.database().ref('/InfantilA/Jugadores').on('value', (snapshot) => {

@@ -25833,6 +25833,14 @@ h5 {
   font-weight: 700;
 }
 
+.descripcion {
+  -webkit-box-shadow: 2px 5px #b2b2b2;
+  box-shadow: 2px 5px #b2b2b2;
+  background-color: #1f8b37;
+  font-weight: 700;
+  padding: 5px;
+}
+
 page-incidencias .scroll-content {
   padding-top: 15px;
 }

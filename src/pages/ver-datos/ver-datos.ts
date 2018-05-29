@@ -22,7 +22,8 @@ export class VerDatosPage {
   public informacion: Array<any>;
   public partidos: Array<any>;
   public info: FormGroup;
-  public datos:Array<number>; 
+  public datos: Array<number>; 
+  public player: Array<any>; 
   public id: number;
   public nminutos:number=0;
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, private builder:FormBuilder, public navParams: NavParams) {
@@ -96,8 +97,7 @@ export class VerDatosPage {
         contenido.appendChild(node);
       }
       document.getElementById("informacion").appendChild(contenido);
-    }
-    if(form.value.Tipo=="Minutos"){
+    }else if(form.value.Tipo=="Minutos"){
       var partidos_f=[];
       firebase.database().ref('/' + JugadoresProvider.categoria + '/Partidos').on('value', (snapshot) => {
         this.partidos=[];
@@ -194,9 +194,7 @@ export class VerDatosPage {
           node.appendChild(textnode);
           contenido.appendChild(node);
           for(cont2 =0;cont2<this.informacion.length;cont2++){
-            console.log("Fuera");
             if(this.informacion[cont2].minutos==null || this.informacion[cont2].minutos==undefined){
-              console.log("Dentro");
               var node = document.createElement("H5");
               var textnode = document.createTextNode(this.informacion[cont2].fecha);
               node.appendChild(textnode);
@@ -218,8 +216,7 @@ export class VerDatosPage {
         });
         alert.present();
       }
-    }
-    if(form.value.Tipo=="Incidencias"){
+    }else if(form.value.Tipo=="Incidencias"){
       document.getElementById("informacion").innerHTML="<div class='incidencia'><h5>"+this.informacion[0].Fecha+"</h5><span>Asunto:" + this.informacion[0].Asunto + " </br></span><span>Incidencia:" + this.informacion[0].Incidencia + "</span></div><br/><br/>";
       for(cont2 =1;cont2<this.informacion.length;cont2++){
         var contenido=document.createElement("DIV");
@@ -246,6 +243,12 @@ export class VerDatosPage {
         contenido.appendChild(node);
         document.getElementById("informacion").appendChild(contenido);
       }
+    }else if(form.value.Tipo=="Descripcion"){
+      firebase.database().ref('/' + JugadoresProvider.categoria + '/Jugadores/' + this.id).on('value', (snapshot) => {
+        this.player = [];
+        this.player=snapshot.val();
+      });
+      document.getElementById("informacion").innerHTML="<div class='descripcion' width='100%'><h3>"+this.player.nombre+"</h3><h5>Descripcion:</br>" + this.informacion[0] + " </br></h5><span>Ultima fecha:" + this.informacion[1] + "</span></div><br/><br/>";
     }
     }else{
       let alert = this.alertCtrl.create({

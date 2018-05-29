@@ -17,6 +17,7 @@ import { AsistenciaPage } from '../pages/asistencia/asistencia';
 import { EquiposProvider } from '../providers/equipos/equipos';
 import { VerDatosPage } from '../pages/ver-datos/ver-datos';
 import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
+import { JugadoresPage } from '../pages/jugadores/jugadores';
 @NgModule({
   declarations: [
     MyApp,
@@ -27,7 +28,8 @@ import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
     SubirpartidoPage,
     MinutosPage,
     AsistenciaPage,
-    VerDatosPage
+    VerDatosPage,
+    JugadoresPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
     SubirpartidoPage,
     MinutosPage,
     AsistenciaPage,
-    VerDatosPage
+    VerDatosPage,
+    JugadoresPage
   ],
   providers: [
     StatusBar,
