@@ -23,7 +23,10 @@ export class IncidenciasPage {
 
   constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
   }
-
+  ionViewWillEnter(){
+   this.jugador=JugadoresProvider.seleccionado;
+   console.log(this.jugador);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad IncidenciasPage');
     this.jugadores = JugadoresProvider.getJugadores();

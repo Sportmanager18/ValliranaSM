@@ -70,7 +70,7 @@ export class VerDatosPage {
         return false;
       });
     });
-    if(this.informacion[0] != null || this.informacion[0] != undefined){
+    if(this.informacion[0] != null && this.informacion[0] != undefined){
     document.getElementById("informacion").style.display="block";
     if(form.value.Tipo=="Asistencias"){
       firebase.database().ref('/' + JugadoresProvider.categoria + '/Partidos').on('value', (snapshot) => {
