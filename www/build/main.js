@@ -448,14 +448,14 @@ var ConvocadoPage = /** @class */ (function () {
     ConvocadoPage.prototype.seleccionar = function (jugador) {
         jugador.equipo = ConvocadoPage_1.equipo;
         jugador.id = this.jugadores.indexOf(jugador);
-        if (jugador.Convocado.convocado > 5) {
+        if (jugador.Convocado.convocado < 5) {
             console.log(jugador);
             ConvocadoPage_1.cjugadores = jugador;
             console.log(jugador);
             this.navCtrl.pop();
         }
         else {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'No se puede convocar',
                 message: 'El Jugador ya ha sido convocado 5 veces',
                 buttons: [
@@ -465,17 +465,17 @@ var ConvocadoPage = /** @class */ (function () {
                     }
                 ]
             });
-            alert_1.present();
+            alert.present();
         }
     };
     ConvocadoPage = ConvocadoPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-convocado',template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\convocado\convocado.html"*/'<!--\n  Generated template for the VerDatosPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-title>Convocado\n    <img src="assets/imgs/logosf.png"/>\n    </ion-title>\n</ion-header>\n\n<ion-content padding>\n  <form [formGroup]="Equipos" (ngSubmit)="buscarjugadores(Equipos)">\n    <div class="Equipos">\n      <ion-item>\n        <ion-select formControlName="Equipo" name="Equipo" required>\n          <ion-label >Seleccione Equipo</ion-label>\n          <ion-option *ngFor="let equipo of equipos" >{{ equipo.nombre }}</ion-option>\n        </ion-select>\n      </ion-item>\n      </div>\n      <button ion-button type="submit">Buscar</button>\n    </form>\n    <div id="mostrar">\n      <ion-list>\n          <button ion-item *ngFor="let jugador of jugadores" (click)="seleccionar(jugador)">{{ jugador.nombre }}</button>\n      </ion-list> \n    </div>\n</ion-content>\n'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\convocado\convocado.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _d || Object])
     ], ConvocadoPage);
     return ConvocadoPage;
-    var ConvocadoPage_1;
+    var ConvocadoPage_1, _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=convocado.js.map

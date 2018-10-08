@@ -55,7 +55,7 @@ export class ConvocadoPage {
   seleccionar(jugador){
     jugador.equipo= ConvocadoPage.equipo;
     jugador.id=this.jugadores.indexOf(jugador);
-    if(jugador.Convocado.convocado>5){
+    if(jugador.Convocado.convocado<5){
     console.log(jugador);
     ConvocadoPage.cjugadores=jugador;
     console.log(jugador);
