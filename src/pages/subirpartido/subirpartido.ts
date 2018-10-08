@@ -58,6 +58,7 @@ export class SubirpartidoPage {
     this.jugadoresc[0]=ConvocadoPage.cjugadores;
     console.log( this.jugadoresc);
     }
+    ConvocadoPage.cjugadores=null;
   }
   convocado(jugador){
     this.id=this.jugadores.indexOf(jugador);
