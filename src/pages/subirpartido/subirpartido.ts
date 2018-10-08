@@ -89,7 +89,7 @@ export class SubirpartidoPage {
           role: 'destructive', // color rojo en iOS
           handler: () => {
     //Jugadores de otros equipos
-    if(this.jugadoresc[0]!=null){
+    if (this.jugadoresc[0] != null && this.jugadoresc[0] != undefined){
         for(let cont=0;this.jugadoresc.length!=cont;cont++){
         this.jugadoresc[cont].Convocado.convocado=this.jugadoresc[cont].Convocado.convocado+1;
         console.log(this.jugadoresc[cont].equipo);
