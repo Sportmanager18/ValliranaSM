@@ -25841,6 +25841,10 @@ h5 {
   padding: 5px;
 }
 
+page-convocado #mostrar {
+  display: none;
+}
+
 page-incidencias .scroll-content {
   padding-top: 15px;
 }
@@ -26102,6 +26106,21 @@ page-subirpartido .partido div {
 page-subirpartido .goles {
   font-weight: bold;
   padding: 0px 5px;
+}
+
+page-subirpartido .enviar {
+  width: 80%;
+}
+
+page-subirpartido .convocado {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 page-ver-datos ion-select {

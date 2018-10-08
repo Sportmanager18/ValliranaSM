@@ -17,8 +17,8 @@
 <ion-content padding>
   <h5>Describe a tus jugadores</h5>
   <ion-item *ngFor="let jugador of jugadores" class="input-wrapper">
-    <ion-label floating>{{jugador.nombre}}</ion-label>
-    <ion-textarea [(ngModel)]="jugador.descripcion" name="descripcion" required></ion-textarea>
+    <ion-label stacked>{{jugador.nombre}}</ion-label>
+    <ion-textarea [(ngModel)]="jugador.descripcion" name="descripcion" value="{{jugador.Descripcion.descripcion}}"></ion-textarea>
   </ion-item>
   <button ion-button (click)="Subirdesc()">Guardar</button>
 </ion-content>

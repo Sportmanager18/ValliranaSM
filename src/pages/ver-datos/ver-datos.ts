@@ -248,7 +248,7 @@ export class VerDatosPage {
         this.player = [];
         this.player=snapshot.val();
       });
-      document.getElementById("informacion").innerHTML="<div class='descripcion' width='100%'><h3>"+this.player.nombre+"</h3><h5>Descripcion:</br>" + this.informacion[0] + " </br></h5><span>Ultima fecha:" + this.informacion[1] + "</span></div><br/><br/>";
+      document.getElementById("informacion").innerHTML="<div class='descripcion' width='100%'><h3>Descripcion:</h3><h5>" + this.informacion[0] + " </br></h5><span>Ultima fecha:" + this.informacion[1] + "</span></div><br/><br/>";
     }
     }else{
       let alert = this.alertCtrl.create({

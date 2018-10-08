@@ -14,7 +14,6 @@ import { AuthProvider } from '../../providers/auth/auth';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
   public todo: any = {};
   
   constructor(private menu: MenuController, public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
@@ -37,7 +36,9 @@ export class LoginPage {
 
   loginFormListener() {
     let email = this.todo.email;
+    email=email + '@pbvallirana.com';
     let password = this.todo.password;
+    console.log(email);
     AuthProvider.login(email, password, () => {
       // si hay algun error durante el login se ejecutara esta funcion anonima
       if (AuthProvider.error != null) {

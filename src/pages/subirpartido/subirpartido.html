@@ -49,6 +49,18 @@
       <ion-label>{{jugador.nombre}}</ion-label>
       <ion-checkbox item-right value="false"  [(ngModel)]="jugador.value" (click)="convocado(jugador)"></ion-checkbox>
     </ion-item>  
-  </ion-list> 
-  <button ion-button full (click)="subirconvocados()">Enviar Convocados</button>
+  </ion-list>
+  <ion-list *ngIf="jugadoresc[0] != undefined">
+    <h6>Jugadores convocados de otros equipos|Partidos convocados</h6>
+      <ion-item *ngFor="let jugadorc of jugadoresc" (click)="Quitar_convocado(jugadorc)">
+        <h4 class="convocado">
+            {{jugadorc.nombre}} | {{jugadorc.Convocado.convocado}}
+          <ion-icon name="close"></ion-icon>
+        </h4>
+      </ion-item>
+  </ion-list>
+  <div>
+    <button ion-button (click)="anadirconvocado()">+</button>
+    <button ion-button class="enviar" (click)="subirconvocados()">Enviar Convocados</button>
+  </div>
 </ion-content>

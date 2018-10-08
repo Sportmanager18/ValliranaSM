@@ -20,7 +20,7 @@
   <form [formGroup]="info" (ngSubmit)="buscarinformacion(info)">
     <div class="info">
       <ion-item>
-        <ion-select formControlName="Jugador"name="Jugador" required>
+        <ion-select formControlName="Jugador" name="Jugador" required>
           <ion-label >Seleccione jugador</ion-label>
           <ion-option *ngFor="let jugador of jugadores" >{{ jugador.nombre }}</ion-option>
         </ion-select>

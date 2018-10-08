@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';import { JugadoresProvider } from '../../providers/jugadores/jugadores';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { JugadoresProvider } from '../../providers/jugadores/jugadores';
 import firebase from 'firebase';
 /**
  * Generated class for the JugadoresPage page.

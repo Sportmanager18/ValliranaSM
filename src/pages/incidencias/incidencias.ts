@@ -17,7 +17,7 @@ import { ListajugadoresPage } from '../listajugadores/listajugadores';
 })
 export class IncidenciasPage {
   public jugadores: Array<object>;
-  public incidencia: any = { }
+  public incidencia: any = { };
   public jugador: object;
   public static id : number;
 

@@ -14,7 +14,6 @@ export class JugadoresProvider {
   public static seleccionado: object;
   public static categoria: string;
   public static error: Error = null;
-
   public static fetch() {
     console.log(this.categoria);
     this.fetchJugadores();
@@ -26,11 +25,9 @@ export class JugadoresProvider {
       console.log(this.jugadores);
     });
   }
-
   public static getJugadores(): Array<object> {
     return this.jugadores;
   }
-
   public static guardarIncidencia(id: number, _asunto: string, _descripcion: string, callback?: Function) {
 
     let date = new Date();

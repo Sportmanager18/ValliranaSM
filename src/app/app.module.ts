@@ -18,6 +18,7 @@ import { EquiposProvider } from '../providers/equipos/equipos';
 import { VerDatosPage } from '../pages/ver-datos/ver-datos';
 import { SubirpartidoPage } from '../pages/subirpartido/subirpartido';
 import { JugadoresPage } from '../pages/jugadores/jugadores';
+import { ConvocadoPage } from '../pages/convocado/convocado';
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +30,8 @@ import { JugadoresPage } from '../pages/jugadores/jugadores';
     MinutosPage,
     AsistenciaPage,
     VerDatosPage,
-    JugadoresPage
+    JugadoresPage,
+    ConvocadoPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import { JugadoresPage } from '../pages/jugadores/jugadores';
     MinutosPage,
     AsistenciaPage,
     VerDatosPage,
-    JugadoresPage
+    JugadoresPage,
+    ConvocadoPage
   ],
   providers: [
     StatusBar,

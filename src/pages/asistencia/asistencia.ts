@@ -24,6 +24,7 @@ export class AsistenciaPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AsistenciaPage');
     this.jugadores = JugadoresProvider.getJugadores();
+    console.log(this.jugadores);
   }
   crearasistencia(jugador){
       this.id=this.jugadores.indexOf(jugador);

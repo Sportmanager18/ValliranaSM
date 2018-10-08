@@ -1,14 +1,14 @@
 webpackJsonp([8],{
 
-/***/ 447:
+/***/ 452:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AsistenciaPageModule", function() { return AsistenciaPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConvocadoPageModule", function() { return ConvocadoPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__asistencia__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__convocado__ = __webpack_require__(151);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AsistenciaPageModule = /** @class */ (function () {
-    function AsistenciaPageModule() {
+var ConvocadoPageModule = /** @class */ (function () {
+    function ConvocadoPageModule() {
     }
-    AsistenciaPageModule = __decorate([
+    ConvocadoPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__asistencia__["a" /* AsistenciaPage */],
+                __WEBPACK_IMPORTED_MODULE_2__convocado__["a" /* ConvocadoPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__asistencia__["a" /* AsistenciaPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__convocado__["a" /* ConvocadoPage */]),
             ],
         })
-    ], AsistenciaPageModule);
-    return AsistenciaPageModule;
+    ], ConvocadoPageModule);
+    return ConvocadoPageModule;
 }());
 
-//# sourceMappingURL=asistencia.module.js.map
+//# sourceMappingURL=convocado.module.js.map
 
 /***/ })
 
