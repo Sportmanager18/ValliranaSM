@@ -6,8 +6,8 @@ webpackJsonp([10],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EquiposProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -55,7 +55,7 @@ var EquiposProvider = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -129,11 +129,114 @@ var AuthProvider = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConvocadoPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the ConvocadoPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ConvocadoPage = /** @class */ (function () {
+    function ConvocadoPage(alertCtrl, navCtrl, builder, navParams) {
+        this.alertCtrl = alertCtrl;
+        this.navCtrl = navCtrl;
+        this.builder = builder;
+        this.navParams = navParams;
+        this.equipos = [];
+        this.jugadores = [];
+        this.fmostrar = 0;
+        this.Equipos = builder.group({
+            Equipo: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
+        });
+    }
+    ConvocadoPage_1 = ConvocadoPage;
+    ConvocadoPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad ConvocadoPage');
+        __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database().ref('/Equipos/').on('value', function (snapshot) {
+            _this.equipos = [];
+            console.log(snapshot.val());
+            snapshot.forEach(function (snap) {
+                _this.equipos.push(snap.val());
+                return false;
+            });
+            console.log(_this.equipos);
+        });
+    };
+    ConvocadoPage.prototype.buscarjugadores = function (form) {
+        var _this = this;
+        ConvocadoPage_1.cequipo = form.value.Equipo;
+        __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database().ref('/' + form.value.Equipo + '/Jugadores/').on('value', function (snapshot) {
+            _this.jugadores = snapshot.val();
+            console.log(_this.jugadores);
+            ConvocadoPage_1.equipo = form.value.Equipo;
+        });
+        document.getElementById("mostrar").style.display = "block";
+    };
+    ConvocadoPage.prototype.seleccionar = function (jugador) {
+        jugador.equipo = ConvocadoPage_1.equipo;
+        jugador.id = this.jugadores.indexOf(jugador);
+        if (jugador.Convocado.convocado < 5) {
+            console.log(jugador);
+            ConvocadoPage_1.cjugadores = jugador;
+            console.log(jugador);
+            this.navCtrl.pop();
+        }
+        else {
+            var alert_1 = this.alertCtrl.create({
+                title: 'No se puede convocar',
+                message: 'El Jugador ya ha sido convocado 5 veces',
+                buttons: [
+                    {
+                        text: 'Aceptar',
+                        role: 'OK'
+                    }
+                ]
+            });
+            alert_1.present();
+        }
+    };
+    ConvocadoPage = ConvocadoPage_1 = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-convocado',template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\convocado\convocado.html"*/'<!--\n  Generated template for the VerDatosPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-title>Convocado\n    <img src="assets/imgs/logosf.png"/>\n    </ion-title>\n</ion-header>\n\n<ion-content padding>\n  <form [formGroup]="Equipos" (ngSubmit)="buscarjugadores(Equipos)">\n    <div class="Equipos">\n      <ion-item>\n        <ion-select formControlName="Equipo" name="Equipo" required>\n          <ion-label >Seleccione Equipo</ion-label>\n          <ion-option *ngFor="let equipo of equipos" >{{ equipo.nombre }}</ion-option>\n        </ion-select>\n      </ion-item>\n      </div>\n      <button ion-button type="submit">Buscar</button>\n    </form>\n    <div id="mostrar">\n      <ion-list>\n          <button ion-item *ngFor="let jugador of jugadores" (click)="seleccionar(jugador)">{{ jugador.nombre }}</button>\n      </ion-list> \n    </div>\n</ion-content>\n'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\convocado\convocado.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+    ], ConvocadoPage);
+    return ConvocadoPage;
+    var ConvocadoPage_1;
+}());
+
+//# sourceMappingURL=convocado.js.map
+
+/***/ }),
+
+/***/ 149:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AsistenciaPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -236,14 +339,14 @@ var AsistenciaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 149:
+/***/ 150:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListajugadoresPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__incidencias_incidencias__ = __webpack_require__(83);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -300,15 +403,15 @@ var ListajugadoresPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 150:
+/***/ 151:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JugadoresPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -379,109 +482,6 @@ var JugadoresPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 151:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConvocadoPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the ConvocadoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ConvocadoPage = /** @class */ (function () {
-    function ConvocadoPage(alertCtrl, navCtrl, builder, navParams) {
-        this.alertCtrl = alertCtrl;
-        this.navCtrl = navCtrl;
-        this.builder = builder;
-        this.navParams = navParams;
-        this.equipos = [];
-        this.jugadores = [];
-        this.fmostrar = 0;
-        this.Equipos = builder.group({
-            Equipo: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
-        });
-    }
-    ConvocadoPage_1 = ConvocadoPage;
-    ConvocadoPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad ConvocadoPage');
-        __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database().ref('/Equipos/').on('value', function (snapshot) {
-            _this.equipos = [];
-            console.log(snapshot.val());
-            snapshot.forEach(function (snap) {
-                _this.equipos.push(snap.val());
-                return false;
-            });
-            console.log(_this.equipos);
-        });
-    };
-    ConvocadoPage.prototype.buscarjugadores = function (form) {
-        var _this = this;
-        ConvocadoPage_1.cequipo = form.value.Equipo;
-        __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database().ref('/' + form.value.Equipo + '/Jugadores/').on('value', function (snapshot) {
-            _this.jugadores = snapshot.val();
-            console.log(_this.jugadores);
-            ConvocadoPage_1.equipo = form.value.Equipo;
-        });
-        document.getElementById("mostrar").style.display = "block";
-    };
-    ConvocadoPage.prototype.seleccionar = function (jugador) {
-        jugador.equipo = ConvocadoPage_1.equipo;
-        jugador.id = this.jugadores.indexOf(jugador);
-        if (jugador.Convocado.convocado < 5) {
-            console.log(jugador);
-            ConvocadoPage_1.cjugadores = jugador;
-            console.log(jugador);
-            this.navCtrl.pop();
-        }
-        else {
-            var alert = this.alertCtrl.create({
-                title: 'No se puede convocar',
-                message: 'El Jugador ya ha sido convocado 5 veces',
-                buttons: [
-                    {
-                        text: 'Aceptar',
-                        role: 'OK'
-                    }
-                ]
-            });
-            alert.present();
-        }
-    };
-    ConvocadoPage = ConvocadoPage_1 = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-convocado',template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\convocado\convocado.html"*/'<!--\n  Generated template for the VerDatosPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-title>Convocado\n    <img src="assets/imgs/logosf.png"/>\n    </ion-title>\n</ion-header>\n\n<ion-content padding>\n  <form [formGroup]="Equipos" (ngSubmit)="buscarjugadores(Equipos)">\n    <div class="Equipos">\n      <ion-item>\n        <ion-select formControlName="Equipo" name="Equipo" required>\n          <ion-label >Seleccione Equipo</ion-label>\n          <ion-option *ngFor="let equipo of equipos" >{{ equipo.nombre }}</ion-option>\n        </ion-select>\n      </ion-item>\n      </div>\n      <button ion-button type="submit">Buscar</button>\n    </form>\n    <div id="mostrar">\n      <ion-list>\n          <button ion-item *ngFor="let jugador of jugadores" (click)="seleccionar(jugador)">{{ jugador.nombre }}</button>\n      </ion-list> \n    </div>\n</ion-content>\n'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\convocado\convocado.html"*/,
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _d || Object])
-    ], ConvocadoPage);
-    return ConvocadoPage;
-    var ConvocadoPage_1, _a, _b, _c, _d;
-}());
-
-//# sourceMappingURL=convocado.js.map
-
-/***/ }),
-
 /***/ 152:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -489,11 +489,11 @@ var ConvocadoPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MinutosPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__subirpartido_subirpartido__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__partidos_partidos__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__subirpartido_subirpartido__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__partidos_partidos__ = __webpack_require__(63);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -772,8 +772,8 @@ var LoginPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerDatosPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -849,7 +849,7 @@ var VerDatosPage = /** @class */ (function () {
                 return false;
             });
         });
-        if (this.informacion[0] != null || this.informacion[0] != undefined) {
+        if (this.informacion[0] != null && this.informacion[0] != undefined) {
             document.getElementById("informacion").style.display = "block";
             if (form.value.Tipo == "Asistencias") {
                 __WEBPACK_IMPORTED_MODULE_3_firebase___default.a.database().ref('/' + __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__["a" /* JugadoresProvider */].categoria + '/Partidos').on('value', function (snapshot) {
@@ -1083,19 +1083,19 @@ webpackEmptyAsyncContext.id = 163;
 
 var map = {
 	"../pages/asistencia/asistencia.module": [
-		448,
+		449,
 		9
 	],
 	"../pages/convocado/convocado.module": [
-		452,
+		448,
 		8
 	],
 	"../pages/incidencias/incidencias.module": [
-		449,
+		450,
 		7
 	],
 	"../pages/jugadores/jugadores.module": [
-		450,
+		452,
 		6
 	],
 	"../pages/listajugadores/listajugadores.module": [
@@ -1103,23 +1103,23 @@ var map = {
 		5
 	],
 	"../pages/login/login.module": [
-		455,
+		456,
 		4
 	],
 	"../pages/minutos/minutos.module": [
-		454,
+		453,
 		3
 	],
 	"../pages/partidos/partidos.module": [
-		453,
+		454,
 		2
 	],
 	"../pages/subirpartido/subirpartido.module": [
-		457,
+		455,
 		1
 	],
 	"../pages/ver-datos/ver-datos.module": [
-		456,
+		457,
 		0
 	]
 };
@@ -1139,13 +1139,13 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JugadoresProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_firebase__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1243,16 +1243,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_incidencias_incidencias__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_auth_auth__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_listajugadores_listajugadores__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_partidos_partidos__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_listajugadores_listajugadores__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_partidos_partidos__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_minutos_minutos__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_asistencia_asistencia__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_asistencia_asistencia__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_equipos_equipos__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_ver_datos_ver_datos__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_subirpartido_subirpartido__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_jugadores_jugadores__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_convocado_convocado__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_subirpartido_subirpartido__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_jugadores_jugadores__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_convocado_convocado__ = __webpack_require__(148);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1300,16 +1300,16 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
+                        { loadChildren: '../pages/convocado/convocado.module#ConvocadoPageModule', name: 'ConvocadoPage', segment: 'convocado', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/asistencia/asistencia.module#AsistenciaPageModule', name: 'AsistenciaPage', segment: 'asistencia', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/incidencias/incidencias.module#IncidenciasPageModule', name: 'IncidenciasPage', segment: 'incidencias', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/jugadores/jugadores.module#JugadoresPageModule', name: 'JugadoresPage', segment: 'jugadores', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/listajugadores/listajugadores.module#ListajugadoresPageModule', name: 'ListajugadoresPage', segment: 'listajugadores', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/convocado/convocado.module#ConvocadoPageModule', name: 'ConvocadoPage', segment: 'convocado', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/partidos/partidos.module#PartidosPageModule', name: 'PartidosPage', segment: 'partidos', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/jugadores/jugadores.module#JugadoresPageModule', name: 'JugadoresPage', segment: 'jugadores', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/minutos/minutos.module#MinutosPageModule', name: 'MinutosPage', segment: 'minutos', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/partidos/partidos.module#PartidosPageModule', name: 'PartidosPage', segment: 'partidos', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/subirpartido/subirpartido.module#SubirpartidoPageModule', name: 'SubirpartidoPage', segment: 'subirpartido', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-datos/ver-datos.module#VerDatosPageModule', name: 'VerDatosPage', segment: 'ver-datos', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/subirpartido/subirpartido.module#SubirpartidoPageModule', name: 'SubirpartidoPage', segment: 'subirpartido', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/ver-datos/ver-datos.module#VerDatosPageModule', name: 'VerDatosPage', segment: 'ver-datos', priority: 'low', defaultHistory: [] }
                     ]
                 }),
             ],
@@ -1353,18 +1353,18 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(288);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_incidencias_incidencias__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_auth_auth__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_partidos_partidos__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_asistencia_asistencia__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_jugadores_jugadores__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_partidos_partidos__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_asistencia_asistencia__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_jugadores_jugadores__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_equipos_equipos__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_ver_datos_ver_datos__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_subirpartido_subirpartido__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_jugadores_jugadores__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_subirpartido_subirpartido__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_jugadores_jugadores__ = __webpack_require__(151);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1502,7 +1502,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\app\app.html"*/'\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <img src="assets/imgs/logo.jpg" alt="avatarimg" />\n      <ion-title>{{ categoria }}</ion-title>\n      <i (click)="equipo()">Equipo en la FCF</i>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        <ion-icon name="{{ p.icon }}" item-start></ion-icon>\n        {{p.title}}\n      </button>\n      <button ion-item (click)="signOut()">\n        <ion-icon name="exit" item-start></ion-icon>\n        Cerrar sesion\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\app\app.html"*/'\n<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <img src="assets/imgs/logo.jpg" alt="avatarimg" />\n      <ion-title>{{ categoria }}</ion-title>\n      <i class="Equipo" (click)="equipo()">Equipo en la FCF</i>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        <ion-icon name="{{ p.icon }}" item-start></ion-icon>\n        {{p.title}}\n      </button>\n      <button ion-item (click)="signOut()">\n        <ion-icon name="exit" item-start></ion-icon>\n        Cerrar sesion\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* MenuController */],
@@ -1521,104 +1521,17 @@ var MyApp = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PartidosPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__subirpartido_subirpartido__ = __webpack_require__(63);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the PartidosPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PartidosPage = /** @class */ (function () {
-    function PartidosPage(alertCtrl, builder, navCtrl, navParams) {
-        this.alertCtrl = alertCtrl;
-        this.builder = builder;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.clasi = [];
-        this.partidos = [];
-    }
-    PartidosPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad PartidosPage');
-        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/' + __WEBPACK_IMPORTED_MODULE_3__providers_jugadores_jugadores__["a" /* JugadoresProvider */].categoria).on('value', function (snapshot) {
-            _this.clasi = [];
-            snapshot.forEach(function (snap) {
-                _this.clasi.push(snap.val());
-                return false;
-            });
-        });
-        this.cargarPartidos();
-    };
-    PartidosPage.prototype.Subirpartido = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__subirpartido_subirpartido__["a" /* SubirpartidoPage */]);
-    };
-    PartidosPage.prototype.Clasificacion = function () {
-        location.assign(this.clasi[4]);
-    };
-    PartidosPage.prototype.Calendario = function () {
-        location.assign(this.clasi[3]);
-    };
-    PartidosPage.prototype.cargarPartidos = function () {
-        var _this = this;
-        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/' + __WEBPACK_IMPORTED_MODULE_3__providers_jugadores_jugadores__["a" /* JugadoresProvider */].categoria + '/Partidos').on('value', function (snapshot) {
-            _this.partidos = [];
-            snapshot.forEach(function (snap) {
-                _this.partidos.push(snap.val());
-                return false;
-            });
-            console.log(_this.partidos);
-        });
-    };
-    PartidosPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-partidos',template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\partidos\partidos.html"*/'<!--\n  Generated template for the AsistenciaPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Partidos\n      <img src="assets/imgs/logosf.png"/>\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list width="100%">\n    <ion-item (click)="Clasificacion()">\n      <h1>\n        <ion-icon align="right" name="list-box"> Clasificacion</ion-icon>\n      </h1>\n    </ion-item>\n    <ion-item (click)="Calendario()">\n        <h1>\n          <ion-icon name="calendar"> Calendario</ion-icon>\n        </h1>\n    </ion-item>\n  </ion-list>\n  <div class="partidos-container" *ngIf="partidos.length > 0">\n    <h1>Mis partidos:</h1>\n    <div class="partidos">\n      <table width="100%" align="center">\n        <ul>\n          <li class="partido" *ngFor="let partido of partidos">\n          <tr>\n            <td colspan="3" align="center">\n              <h4>{{partido.fecha}}</h4>\n            </td>\n          </tr>\n          <tr>\n            <td width="40%"> \n              <div class="local">\n                <h5 class="nombre-equipo">{{ partido.Equipo1 }}</h5>\n              </div>\n            </td>\n            <td width="20%" align="center">\n              <h4>{{ partido.GEquipo1 }} - {{ partido.GEquipo2 }}</h4>\n            </td>\n            <td width="40%">\n              <div class="visitante">\n                <h5 class="nombre-equipo">{{ partido.Equipo2 }}</h5>\n              </div>\n            </td>\n          </tr>\n          </li>\n        </ul>\n      </table>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\partidos\partidos.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
-    ], PartidosPage);
-    return PartidosPage;
-}());
-
-//# sourceMappingURL=partidos.js.map
-
-/***/ }),
-
-/***/ 63:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SubirpartidoPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_equipos_equipos__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_firebase__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__partidos_partidos__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__partidos_partidos__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__minutos_minutos__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__convocado_convocado__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__convocado_convocado__ = __webpack_require__(148);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1682,7 +1595,6 @@ var SubirpartidoPage = /** @class */ (function () {
             this.jugadoresc[0] = __WEBPACK_IMPORTED_MODULE_8__convocado_convocado__["a" /* ConvocadoPage */].cjugadores;
             console.log(this.jugadoresc);
         }
-        __WEBPACK_IMPORTED_MODULE_8__convocado_convocado__["a" /* ConvocadoPage */].cjugadores = null;
     };
     SubirpartidoPage.prototype.convocado = function (jugador) {
         this.id = this.jugadores.indexOf(jugador);
@@ -1715,12 +1627,14 @@ var SubirpartidoPage = /** @class */ (function () {
                     role: 'destructive',
                     handler: function () {
                         //Jugadores de otros equipos
-                        for (var cont = 0; _this.jugadoresc.length != cont; cont++) {
-                            _this.jugadoresc[cont].Convocado.convocado = _this.jugadoresc[cont].Convocado.convocado + 1;
-                            console.log(_this.jugadoresc[cont].equipo);
-                            __WEBPACK_IMPORTED_MODULE_5_firebase___default.a.database().ref('/' + _this.jugadoresc[cont].equipo + '/Jugadores/' + _this.jugadoresc[cont].id + '/Convocado').set({
-                                convocado: _this.jugadoresc[cont].Convocado.convocado
-                            });
+                        if (_this.jugadoresc[0] != null && _this.jugadoresc[0] != undefined) {
+                            for (var cont = 0; _this.jugadoresc.length != cont; cont++) {
+                                _this.jugadoresc[cont].Convocado.convocado = _this.jugadoresc[cont].Convocado.convocado + 1;
+                                console.log(_this.jugadoresc[cont].equipo);
+                                __WEBPACK_IMPORTED_MODULE_5_firebase___default.a.database().ref('/' + _this.jugadoresc[cont].equipo + '/Jugadores/' + _this.jugadoresc[cont].id + '/Convocado').set({
+                                    convocado: _this.jugadoresc[cont].Convocado.convocado
+                                });
+                            }
                         }
                         //Jugadores del equipo
                         var fjugador = 0;
@@ -1832,18 +1746,105 @@ var SubirpartidoPage = /** @class */ (function () {
         });
         alert.present();
     };
-    SubirpartidoPage.convocados = new Array(20);
+    SubirpartidoPage.convocados = new Array(26);
     SubirpartidoPage = SubirpartidoPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-subirpartido',template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\subirpartido\subirpartido.html"*/'<!--\n  Generated template for the SubirpartidoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>Subir Partido\n        <img src="assets/imgs/logosf.png"/>\n      </ion-title>\n    </ion-navbar>\n  </ion-header>\n\n\n<ion-content padding>\n\n  \n  <form [formGroup]="form" (ngSubmit)="subirPartido(form)">\n    <div class="nuevo-partido">\n      <div class="vs-container">\n        <ion-item>\n          <ion-label>Local</ion-label>\n          <ion-select formControlName="equipoLocal" name="equipoLocal" required>\n          <ion-option *ngFor="let equipo of equipos">{{ equipo.nombre }}</ion-option>\n          </ion-select>\n        </ion-item>\n        <h1>VS</h1>\n        <ion-item>\n          <ion-label>Visitante</ion-label>\n          <ion-select formControlName="equipoVisitante" name="equipoVisitante" required>\n            <ion-option *ngFor="let equipo of equipos">{{ equipo.nombre }}</ion-option>\n          </ion-select>\n        </ion-item>\n      </div>\n      <div class="partido-inputs">\n        <ion-input formControlName="golesLocal" name="golesLocal" type="number" value="0" required></ion-input>\n        <ion-input formControlName="golesVisitante" name="golesVisitante" type="number" value="0" required></ion-input>\n      </div>\n      <button ion-button type="submit">Subir partido</button>\n    </div>\n  </form>\n  <h5>Marcar solo los no convocados</h5>\n  <ion-list>\n    <ion-item *ngFor="let jugador of jugadores">\n      <ion-label>{{jugador.nombre}}</ion-label>\n      <ion-checkbox item-right value="false"  [(ngModel)]="jugador.value" (click)="convocado(jugador)"></ion-checkbox>\n    </ion-item>  \n  </ion-list>\n  <ion-list *ngIf="jugadoresc[0] != undefined">\n    <h6>Jugadores convocados de otros equipos|Partidos convocados</h6>\n      <ion-item *ngFor="let jugadorc of jugadoresc" (click)="Quitar_convocado(jugadorc)">\n        <h4 class="convocado">\n            {{jugadorc.nombre}} | {{jugadorc.Convocado.convocado}}\n          <ion-icon name="close"></ion-icon>\n        </h4>\n      </ion-item>\n  </ion-list>\n  <div>\n    <button ion-button (click)="anadirconvocado()">+</button>\n    <button ion-button class="enviar" (click)="subirconvocados()">Enviar Convocados</button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\subirpartido\subirpartido.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
     ], SubirpartidoPage);
     return SubirpartidoPage;
-    var SubirpartidoPage_1, _a, _b, _c, _d;
+    var SubirpartidoPage_1;
 }());
 
 //# sourceMappingURL=subirpartido.js.map
+
+/***/ }),
+
+/***/ 63:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PartidosPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__subirpartido_subirpartido__ = __webpack_require__(62);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the PartidosPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PartidosPage = /** @class */ (function () {
+    function PartidosPage(alertCtrl, builder, navCtrl, navParams) {
+        this.alertCtrl = alertCtrl;
+        this.builder = builder;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.clasi = [];
+        this.partidos = [];
+    }
+    PartidosPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad PartidosPage');
+        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/' + __WEBPACK_IMPORTED_MODULE_3__providers_jugadores_jugadores__["a" /* JugadoresProvider */].categoria).on('value', function (snapshot) {
+            _this.clasi = [];
+            snapshot.forEach(function (snap) {
+                _this.clasi.push(snap.val());
+                return false;
+            });
+        });
+        this.cargarPartidos();
+    };
+    PartidosPage.prototype.Subirpartido = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__subirpartido_subirpartido__["a" /* SubirpartidoPage */]);
+    };
+    PartidosPage.prototype.Clasificacion = function () {
+        location.assign(this.clasi[4]);
+    };
+    PartidosPage.prototype.Calendario = function () {
+        location.assign(this.clasi[3]);
+    };
+    PartidosPage.prototype.cargarPartidos = function () {
+        var _this = this;
+        __WEBPACK_IMPORTED_MODULE_4_firebase___default.a.database().ref('/' + __WEBPACK_IMPORTED_MODULE_3__providers_jugadores_jugadores__["a" /* JugadoresProvider */].categoria + '/Partidos').on('value', function (snapshot) {
+            _this.partidos = [];
+            snapshot.forEach(function (snap) {
+                _this.partidos.push(snap.val());
+                return false;
+            });
+            console.log(_this.partidos);
+        });
+    };
+    PartidosPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-partidos',template:/*ion-inline-start:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\partidos\partidos.html"*/'<!--\n  Generated template for the AsistenciaPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Partidos\n      <img src="assets/imgs/logosf.png"/>\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list width="100%">\n    <ion-item (click)="Clasificacion()">\n      <h1>\n        <ion-icon align="right" name="list-box"> Clasificacion</ion-icon>\n      </h1>\n    </ion-item>\n    <ion-item (click)="Calendario()">\n        <h1>\n          <ion-icon name="calendar"> Calendario</ion-icon>\n        </h1>\n    </ion-item>\n  </ion-list>\n  <div class="partidos-container" *ngIf="partidos.length > 0">\n    <h1>Mis partidos:</h1>\n    <div class="partidos">\n      <table width="100%" align="center">\n        <ul>\n          <li class="partido" *ngFor="let partido of partidos">\n          <tr>\n            <td colspan="3" align="center">\n              <h4>{{partido.fecha}}</h4>\n            </td>\n          </tr>\n          <tr>\n            <td width="40%"> \n              <div class="local">\n                <h5 class="nombre-equipo">{{ partido.Equipo1 }}</h5>\n              </div>\n            </td>\n            <td width="20%" align="center">\n              <h4>{{ partido.GEquipo1 }} - {{ partido.GEquipo2 }}</h4>\n            </td>\n            <td width="40%">\n              <div class="visitante">\n                <h5 class="nombre-equipo">{{ partido.Equipo2 }}</h5>\n              </div>\n            </td>\n          </tr>\n          </li>\n        </ul>\n      </table>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"A:\Jorge\Documents\Vallirana-git-hub\vallirana-app-ionic\src\pages\partidos\partidos.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
+    ], PartidosPage);
+    return PartidosPage;
+}());
+
+//# sourceMappingURL=partidos.js.map
 
 /***/ }),
 
@@ -1854,8 +1855,8 @@ var SubirpartidoPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IncidenciasPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__listajugadores_listajugadores__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__listajugadores_listajugadores__ = __webpack_require__(150);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1883,6 +1884,10 @@ var IncidenciasPage = /** @class */ (function () {
         this.incidencia = {};
     }
     IncidenciasPage_1 = IncidenciasPage;
+    IncidenciasPage.prototype.ionViewWillEnter = function () {
+        this.jugador = __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__["a" /* JugadoresProvider */].seleccionado;
+        console.log(this.jugador);
+    };
     IncidenciasPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad IncidenciasPage');
         this.jugadores = __WEBPACK_IMPORTED_MODULE_2__providers_jugadores_jugadores__["a" /* JugadoresProvider */].getJugadores();

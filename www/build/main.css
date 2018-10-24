@@ -25689,6 +25689,10 @@ ion-navbar.toolbar {
   align-items: flex-start;
 }
 
+i {
+  color: white;
+}
+
 .form-container form {
   width: 100%;
 }

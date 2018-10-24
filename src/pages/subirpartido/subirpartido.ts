@@ -28,7 +28,7 @@ export class SubirpartidoPage {
   public form: FormGroup;
   public id:number;
   public extras:Array<object>;
-  public static convocados:Array<any>= new Array(20);
+  public static convocados:Array<any>= new Array(26);
   constructor(private alertCtrl: AlertController, private builder: FormBuilder, public navCtrl: NavController, public navParams: NavParams) {
     this.form = builder.group({
       equipoLocal: ['', Validators.required],
@@ -58,7 +58,6 @@ export class SubirpartidoPage {
     this.jugadoresc[0]=ConvocadoPage.cjugadores;
     console.log( this.jugadoresc);
     }
-    ConvocadoPage.cjugadores=null;
   }
   convocado(jugador){
     this.id=this.jugadores.indexOf(jugador);
@@ -90,13 +89,14 @@ export class SubirpartidoPage {
           role: 'destructive', // color rojo en iOS
           handler: () => {
     //Jugadores de otros equipos
-    for(let cont=0;this.jugadoresc.length!=cont;cont++){
-    
-    this.jugadoresc[cont].Convocado.convocado=this.jugadoresc[cont].Convocado.convocado+1;
-    console.log(this.jugadoresc[cont].equipo);
-    firebase.database().ref('/' +this.jugadoresc[cont].equipo + '/Jugadores/' + this.jugadoresc[cont].id+'/Convocado').set({
-        convocado:this.jugadoresc[cont].Convocado.convocado
-    }); 
+    if (this.jugadoresc[0] != null && this.jugadoresc[0] != undefined){
+        for(let cont=0;this.jugadoresc.length!=cont;cont++){
+        this.jugadoresc[cont].Convocado.convocado=this.jugadoresc[cont].Convocado.convocado+1;
+        console.log(this.jugadoresc[cont].equipo);
+        firebase.database().ref('/' +this.jugadoresc[cont].equipo + '/Jugadores/' + this.jugadoresc[cont].id+'/Convocado').set({
+            convocado:this.jugadoresc[cont].Convocado.convocado
+        }); 
+        }
     }
     //Jugadores del equipo
     let fjugador=0;
