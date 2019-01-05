@@ -34,16 +34,17 @@ export class PartidosPage {
         return false;
       });
     });
+    console.log(this.clasi);
     this.cargarPartidos();
   }
   Subirpartido() {
     this.navCtrl.push(SubirpartidoPage);
   }
   Clasificacion(){
-    location.assign(this.clasi[4]);
+    location.assign(this.clasi[3]);
   }
   Calendario(){
-    location.assign(this.clasi[3]);
+    location.assign(this.clasi[2]);
   }
   cargarPartidos() {
     firebase.database().ref('/' + JugadoresProvider.categoria + '/Partidos').on('value', (snapshot) => {

@@ -110,7 +110,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
   equipo(){
-    location.assign(this.clasi[6]);
+    location.assign(this.clasi[5]);
   }
   signOut() {
     let alert = this.alertCtrl.create({
